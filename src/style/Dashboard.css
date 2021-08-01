@@ -1,0 +1,25 @@
+.sidebar {
+    position: absolute;
+    display: flex;
+    height: 100vh;
+    overflow: scroll initial;
+}
+
+.CDBSidebar {
+    color: #fff;
+    background-color: #333;
+
+}
+
+.CDBSidebarFooter {
+    text-align: center;
+}
+
+.sidebar-btn-wrapper {
+    padding: 20px 5px;
+}
+
+.datagrid {
+    position: relative;
+    left: 100px;
+}

@@ -28,7 +28,7 @@ class App extends React.Component {
 
     fetch('https://sob7yipykh.execute-api.ap-southeast-2.amazonaws.com/data-insights-sample-data')
         .then(async response => {
-            const data = await response.json();
+            const data = await JSON.parse(response.replace(/\bNaN\b/g, "null"));
             // check for error response
             if (!response.ok) {
                 // get error message from body or default to response statusText

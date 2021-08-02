@@ -1,19 +1,43 @@
+.pageBody {
+    background-color: #fff;
+    width: 100vw;
+    height: 100vh;
+}
+
 .navbar{
+    background-color: #EAEAEA;
+    text-align: right;
     position: fixed;
     float: right;
     right:0;
-    width: 80vw;
+    width: 85vw;
 }
 
+.navbar-brand {
+ color: red;
+}
 
 .sidebar {
-    border: 1px solid green;
+    background-color: #EAEAEA;
     position: fixed;
-    max-width: 20vw;
+    max-width: 15vw;
+    min-width: 10vw;
     left: 0;
     display: block;
     height: 100vh;
     overflow: scroll initial;
+}
+
+.sidebar h2 {
+    text-align: center;
+    border-bottom: 3px solid black;
+    
+}
+
+.sidebar Button {
+    background-color: #00004D;
+    margin: 10%;
+    width: 80%;
 }
 
 
@@ -22,15 +46,16 @@
 .graph-container {
     position: fixed;
     left: 0;
-    margin-left: 22vw;
+    margin-left: 20vw;
     margin-top: 10vh;
     height: 85vh;
-    width: 60vw;
+    width: 75vw;
     border: 2px solid red;
 }
 
 .graphs {
     border: 1px solid blue;
+    background-color: #FCFBFB;
     width: 45%; 
     height: 45%;
     position: absolute;

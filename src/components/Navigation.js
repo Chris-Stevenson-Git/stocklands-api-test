@@ -1,5 +1,5 @@
 import React from 'react'
-import Navbar from 'react-bootstrap/Navbar'
+import {Navbar, Nav} from 'react-bootstrap'
 
 import '../style/Dashboard.css'
 
@@ -8,9 +8,8 @@ class Navigation extends React.Component{
 
     render(){
         return(
-            <Navbar bg='light'>
-                <Navbar.Brand>Stocklands Tech Test</Navbar.Brand>
-
+            <Navbar>
+                    <Navbar.Brand >Chris Stevenson Tech Test</Navbar.Brand>
             </Navbar>
         );//return
     }//render

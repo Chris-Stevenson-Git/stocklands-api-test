@@ -131,6 +131,7 @@ class Sidebar extends React.Component{
                             }
                         </Form.Control>
                     </Form.Group>
+                    <br/>
                     <Button onClick={this.handleSubmit}>Apply Filters</Button>
                 </Form>
 

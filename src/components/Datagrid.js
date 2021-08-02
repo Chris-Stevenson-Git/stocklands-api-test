@@ -103,26 +103,27 @@ class Datagrid extends React.Component{
     componentDidMount(){
         fetch('https://sob7yipykh.execute-api.ap-southeast-2.amazonaws.com/data-insights-sample-data')
         .then(response => {
-          console.log('received response');
           return response.text();
         })
         .then(string => {
-          let cleanJSON = JSON.parse(string.replace(/\bNaN\b/g, "null"));
-          console.log(cleanJSON);
-          this.setState({data: cleanJSON},
-            this.filterData())
+            //regex to remove NaN from incoming JSON which would otherwise crash the json parse.
+            let cleanJSON = JSON.parse(string.replace(/\bNaN\b/g, "null"));
+            console.log(cleanJSON)
+            this.setState({data: cleanJSON},
+            this.filterData)
         })
     }
     
     applyFilters = (childData) => {
         console.log('Filters Applied')
         this.setState({selectedFilters: childData},
-            this.filterData()
+            this.filterData
         );
     }
 
 
     filterData = () => {
+        console.log('Getting this far')
         //Filter the data
 
         //Create an array of only the applied filters
@@ -136,6 +137,7 @@ class Datagrid extends React.Component{
 
         //Shorten list of data to applied filters
         let data = this.state.data
+        console.log(data)
 
         let filteredData = []
         //Loop through full set of data
@@ -156,10 +158,14 @@ class Datagrid extends React.Component{
         }
 
         this.setState({filteredData: filteredData},
-            this.updatePieChart())
+            this.updateCharts)
     }
 
-    updatePieChart = () => {
+
+    //Function to update all the charts
+    updateCharts = () => {
+
+        //Declaring empty chart data to make it easier to build later
         let tempPieChartData = {
             "Positive": 0,
             "Neutral": 0,
@@ -177,11 +183,10 @@ class Datagrid extends React.Component{
             null: [0,0,0]
         }
 
-        let tempTopicBarChartData = {
-            
+        let tempTopicBarChartData = {}
 
-        }
-        console.log(this.state.filteredData)
+
+        //Loop through the filtered data and update the above temp data fields with sentiment values
         for (let i = 0; i < this.state.filteredData.length; i++) {
 
             switch(this.state.filteredData[i]["Sentiment"]){
@@ -207,7 +212,7 @@ class Datagrid extends React.Component{
             
         }
 
-        //create stackedBarChartData
+        //create the data which will be used in the Region by Sentiment graph
         let stackedBarChartData = [];
         for (const region in tempStackedBarChartData) {
             let regionName = region;
@@ -222,33 +227,28 @@ class Datagrid extends React.Component{
             })
         }
 
-        //create Topic Bar Chart Data
+        //create data for top5 topics graph
+
+        //small bit of code to create an array of topics sorted by number of positive sentiments
         const sortedTopics = [];
         for(const topic in tempTopicBarChartData){
             sortedTopics.push([topic, tempTopicBarChartData[topic]])
         }
         sortedTopics.sort((a, b) => b[1] - a[1])
+
+        //create the array and loop through the sorted topics no more than 5 times to create the top 5. 
         let topicBarChartData = [];
-        if(sortedTopics.length > 0){
-            console.log("SORTED TOPICS")
-            console.log(sortedTopics)
-            for (let i = 0; i < sortedTopics.length; i++) { 
-                topicBarChartData.push({
-                    name: sortedTopics[i][0],
-                    value: sortedTopics[i][1]
-                })
-                if(i >= 4){
-                    break;
-                }
-                console.log('looping')
+        for (let i = 0; i < sortedTopics.length; i++) { 
+            topicBarChartData.push({
+                name: sortedTopics[i][0],
+                value: sortedTopics[i][1]
+            })
+            if(i >= 4){
+                break;
             }
         }
 
-        console.log(sortedTopics)
-        
-        console.log(stackedBarChartData)
-        console.log(tempTopicBarChartData)
-
+        //Sets the state which will be used by the graphs to display the data
         this.setState({
             pieChartData: [
                 {

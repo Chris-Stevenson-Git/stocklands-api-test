@@ -1,7 +1,7 @@
 import React from 'react'
 import Navbar from 'react-bootstrap/Navbar'
 
-
+import '../style/Dashboard.css'
 
 
 class Navigation extends React.Component{

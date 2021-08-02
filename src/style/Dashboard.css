@@ -59,8 +59,5 @@
 .graph3 {
     left: 3.3%;
     bottom: 3.3%;
-}
-.graph4 {
-    right: 3.3%;
-    bottom: 3.3%;
+    width: 93%;
 }

@@ -86,8 +86,16 @@ class Datagrid extends React.Component{
                 Neutral: 0,
                 Negative: 0 
             },
+            {
+                name: 'Other',
+                Positive: 0,
+                Neutral: 0,
+                Negative: 0 
+            }
 
-        ]
+        ],
+
+        topicBarChartData: []
 
 
     }
@@ -168,6 +176,11 @@ class Datagrid extends React.Component{
             "VIC": [0,0,0],
             null: [0,0,0]
         }
+
+        let tempTopicBarChartData = {
+            
+
+        }
         console.log(this.state.filteredData)
         for (let i = 0; i < this.state.filteredData.length; i++) {
 
@@ -175,6 +188,11 @@ class Datagrid extends React.Component{
                 case "Positive":
                     tempPieChartData["Positive"] = tempPieChartData["Positive"] + 1;
                     tempStackedBarChartData[this.state.filteredData[i]["Region"]][0] = tempStackedBarChartData[this.state.filteredData[i]["Region"]][0] + 1;
+                    if(tempTopicBarChartData[this.state.filteredData[i]["Topic"]]){
+                        tempTopicBarChartData[this.state.filteredData[i]["Topic"]] += 1;
+                    } else if(this.state.filteredData[i]["Topic"] != null){
+                        tempTopicBarChartData[this.state.filteredData[i]["Topic"]] = 1;
+                    }
                     break;
                 case "Neutral":
                     tempPieChartData["Neutral"] = tempPieChartData["Neutral"] + 1;
@@ -203,8 +221,28 @@ class Datagrid extends React.Component{
                 Negative: tempStackedBarChartData[region][2]
             })
         }
+
+        //create Topic Bar Chart Data
+        const sortedTopics = [];
+        for(const topic in tempTopicBarChartData){
+            sortedTopics.push([topic, tempTopicBarChartData[topic]])
+        }
+        sortedTopics.sort((a, b) => b[1] - a[1])
+        let topicBarChartData = [];
+        if(sortedTopics.length > 0){
+            for (let i = 0; i < 5; i++) { 
+                topicBarChartData.push({
+                    name: sortedTopics[i][0],
+                    value: sortedTopics[i][1]
+                })
+                console.log('looping')
+            }
+        }
+
+        console.log(sortedTopics)
         
         console.log(stackedBarChartData)
+        console.log(tempTopicBarChartData)
 
         this.setState({
             pieChartData: [
@@ -221,28 +259,13 @@ class Datagrid extends React.Component{
                     value: tempPieChartData["Negative"]
                 }
             ],
-            stackedBarChartData: stackedBarChartData
+            stackedBarChartData: stackedBarChartData,
+            topicBarChartData: topicBarChartData
+
         })
 
     }
 
-    updateStackedBarChart = () => {
-        let tempData = {
-            "NSWS": [0,0,0],
-            "QLD": [0,0,0],
-            "NSW": [0,0,0],
-            "NSWN": [0,0,0],
-            "WA": [0,0,0],
-            "NAT": [0,0,0],
-            "VIC": [0,0,0]
-        }
-
-        //Loop through all the filtered data
-        for (let i = 0; i < this.state.filteredData.length; i++) {
-            
-            
-        }
-    }
 
 
 
@@ -264,7 +287,22 @@ class Datagrid extends React.Component{
                         </ResponsiveContainer>
                     </div>
                     <div className='graphs graph2'>
-                        <ResponsiveContainer width="100%" height="100%">
+                        <ResponsiveContainer>
+                                <BarChart 
+                                    data={this.state.topicBarChartData}
+                                    layout="vertical" barCategoryGap={2}
+                                    margin={{ top: 50, right: 0, left: 0, bottom: 0 }}>
+                                <Tooltip />
+                                <XAxis type="number" hide/>
+                                <YAxis type="category" dataKey="name" hide/>
+                                    
+                                <Bar dataKey="value" stackId="a" fill="#66d9ff" />
+                                
+                            </BarChart>
+                            </ResponsiveContainer>
+                    </div>
+                    <div className='graphs graph3'>
+                    <ResponsiveContainer width="100%" height="100%">
                             <BarChart
                             width={500}
                             height={300}
@@ -272,7 +310,7 @@ class Datagrid extends React.Component{
                             margin={{
                                 top: 20,
                                 right: 30,
-                                left: 20,
+                                left: 0,
                                 bottom: 5,
                             }}
                             >
@@ -286,25 +324,6 @@ class Datagrid extends React.Component{
                             <Bar dataKey="Positive" stackId="a" fill="#00810e" />
                             </BarChart>
                         </ResponsiveContainer>
-                    </div>
-                    <div className='graphs graph3'>
-                        <ResponsiveContainer>
-                            <BarChart 
-                                data={this.state.stackedBarChartData}
-                                layout="vertical" barCategoryGap={2}
-                                margin={{ top: 0, right: 50, left: 0, bottom: 0 }}>
-                            <XAxis type="number" />
-                            <YAxis type="category" dataKey="name"/>
-                                
-                            <Bar dataKey="Negative" stackId="a" fill="#ff0000" />
-                            <Bar dataKey="Neutral" stackId="a" fill="#ffff00" />
-                            <Bar dataKey="Positive" stackId="a" fill="#00810e" />
-                            
-                        </BarChart>
-                        </ResponsiveContainer>
-                    </div>
-                    <div className='graphs graph4'>
-
                     </div>
                 </div>
             </Container>

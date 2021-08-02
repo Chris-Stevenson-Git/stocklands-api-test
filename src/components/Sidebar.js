@@ -1,16 +1,6 @@
 import React from 'react'
-import Form from 'react-bootstrap/Form'
+import { Container, Form, Button} from 'react-bootstrap';
 
-import {
-    CDBSidebar,
-    CDBSidebarContent,
-    CDBSidebarFooter,
-    CDBSidebarHeader,
-    CDBSidebarMenu,
-    CDBSidebarMenuItem,
-    CDBBtn,
-    CBDContainer
-  } from 'cdbreact';
 
 
 import '../style/Dashboard.css'
@@ -40,6 +30,7 @@ class Sidebar extends React.Component{
         }
     }
 
+    //Function to send the selected filters to the datagrid component
     handleSubmit = (ev) => {
         this.props.sendData(this.state.selectedFilters)
     }
@@ -60,109 +51,90 @@ class Sidebar extends React.Component{
 
     render(){
         return(
-            <div className='sidebar'>
-                <CDBSidebar>
+            <Container fluid className='sidebar'>
+                <h2>Filters</h2>
+                <Form>
+                    <Form.Group>
+                        <Form.Label>Business Unit</Form.Label>
+                        <Form.Control as='select' name='Business Unit' onChange={this.handleUpdate}>
+                            <option name='Any'>Any</option>
+                            {
+                                businessUnits.map(item => (
+                                    <option name={item}>{item}</option>
+                                ))
+                            }
+                        </Form.Control>
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Label>Post Type</Form.Label>
+                        <Form.Control as='select' name='Post Type' onChange={this.handleUpdate}>
+                            <option name='Any'>Any</option>
+                            {
+                                postType.map(item => (
+                                    <option name={item}>{item}</option>
+                                ))
+                            }
+                        </Form.Control>
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Label>Region</Form.Label>
+                        <Form.Control as='select' name='Region' onChange={this.handleUpdate}>
+                            <option name='Any'>Any</option>
+                            {
+                                region.map(item => (
+                                    <option name={item}>{item}</option>
+                                ))
+                            }
+                        </Form.Control>
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Label>Sentiment</Form.Label>
+                        <Form.Control as='select' name='Sentiment' onChange={this.handleUpdate}>
+                            <option name='Any'>Any</option>
+                            {
+                                sentiment.map(item => (
+                                    <option name={item}>{item}</option>
+                                ))
+                            }
+                        </Form.Control>
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Label>Sub Type</Form.Label>
+                        <Form.Control as='select' name='Sub Type' onChange={this.handleUpdate}>
+                            <option name='Any'>Any</option>
+                            {
+                                subType.map(item => (
+                                    <option name={item}>{item}</option>
+                                ))
+                            }
+                        </Form.Control>
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Label>Topic</Form.Label>
+                        <Form.Control as='select' name='Topic' onChange={this.handleUpdate}>
+                            <option name='Any'>Any</option>
+                            {
+                                topic.map(item => (
+                                    <option name={item}>{item}</option>
+                                ))
+                            }
+                        </Form.Control>
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Label>Indicator</Form.Label>
+                        <Form.Control as='select' name='indicator' onChange={this.handleUpdate}>
+                            <option name='Any'>Any</option>
+                            {
+                                indicator.map(item => (
+                                    <option name={item}>{item}</option>
+                                ))
+                            }
+                        </Form.Control>
+                    </Form.Group>
+                    <Button onClick={this.handleSubmit}>Apply Filters</Button>
+                </Form>
 
-                    <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
-                        <span>Filters</span>
-                    </CDBSidebarHeader>
-
-                    <CDBSidebarContent className='sidebar-content'>
-                        <form>
-                            <CDBSidebarMenu>
-                                <CDBSidebarMenuItem>
-                                    <h4>Business Unit</h4>
-                                    <select name='Business Unit' onChange={this.handleUpdate}>
-                                        <option name='Any'>Any</option>
-                                        {
-                                            businessUnits.map(item => (
-                                                <option name={item}>{item}</option>
-                                            ))
-                                        }
-                                    </select>
-                                </CDBSidebarMenuItem>
-                                <br/>
-                                <CDBSidebarMenuItem>
-                                    <h4>Post Type</h4>
-                                    <select name='Post Type' onChange={this.handleUpdate}>
-                                        <option name='Any'>Any</option>
-                                        {
-                                            postType.map(item => (
-                                                <option name={item}>{item}</option>
-                                            ))
-                                        }
-                                    </select>
-                                </CDBSidebarMenuItem>
-                                <br/>
-                                <CDBSidebarMenuItem>
-                                    <h4>Region</h4>
-                                    <select name='Region' onChange={this.handleUpdate}>
-                                        <option name='Any'>Any</option>
-                                        {
-                                            region.map(item => (
-                                                <option name={item}>{item}</option>
-                                            ))
-                                        }
-                                    </select>
-                                </CDBSidebarMenuItem>
-                                <br/>
-                                <CDBSidebarMenuItem>
-                                    <h4>Sentiment</h4>
-                                    <select name='Sentiment' onChange={this.handleUpdate}>
-                                        <option name='Any'>Any</option>
-                                        {
-                                            sentiment.map(item => (
-                                                <option name={item}>{item}</option>
-                                            ))
-                                        }
-                                    </select>
-                                </CDBSidebarMenuItem>
-                                <br/>
-                                <CDBSidebarMenuItem>
-                                    <h4>Sub Type</h4>
-                                    <select name='Sub Type' onChange={this.handleUpdate}>
-                                        <option name='Any'>Any</option>
-                                        {
-                                            subType.map(item => (
-                                                <option name={item}>{item}</option>
-                                            ))
-                                        }
-                                    </select>
-                                </CDBSidebarMenuItem>
-                                <br/>
-                                <CDBSidebarMenuItem>
-                                    <h4>Topic</h4>
-                                    <select name='Topic' onChange={this.handleUpdate}>
-                                        <option name='Any'>Any</option>
-                                        {
-                                            topic.map(item => (
-                                                <option name={item}>{item}</option>
-                                            ))
-                                        }
-                                    </select>
-                                </CDBSidebarMenuItem>
-                                <br/>
-                                <CDBSidebarMenuItem>
-                                    <h4>Indicator</h4>
-                                    <select name='indicator' onChange={this.handleUpdate}>
-                                        <option name='Any'>Any</option>
-                                        {
-                                            indicator.map(item => (
-                                                <option name={item}>{item}</option>
-                                            ))
-                                        }
-                                    </select>
-                                </CDBSidebarMenuItem>
-                                <CDBBtn color='primary' onClick={this.handleSubmit}>Apply Filter</CDBBtn>
-
-                            </CDBSidebarMenu>
-                        </form>
-
-                    </CDBSidebarContent>
-
-                </CDBSidebar>
-
-            </div>
+            </Container>
         );//return
     }//render
 }//class Sidebar

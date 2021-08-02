@@ -43,7 +43,7 @@ class Sidebar extends React.Component{
                 ...prevState.selectedFilters,
                 [ev.target.name]: ev.target.value
             }
-        }))
+        }), this.handleSubmit)
     }
 
 
@@ -131,8 +131,6 @@ class Sidebar extends React.Component{
                             }
                         </Form.Control>
                     </Form.Group>
-                    <br/>
-                    <Button onClick={this.handleSubmit}>Apply Filters</Button>
                 </Form>
 
             </Container>

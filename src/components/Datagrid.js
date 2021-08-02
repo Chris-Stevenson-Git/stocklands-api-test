@@ -1,6 +1,6 @@
 import React from 'react'
 import { Container} from 'react-bootstrap';
-import { Pie, PieChart, Cell, ResponsiveContainer, Label } from 'recharts';
+import { Pie, PieChart, Cell, ResponsiveContainer} from 'recharts';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
 import Sidebar from './Sidebar.js'
@@ -108,14 +108,12 @@ class Datagrid extends React.Component{
         .then(string => {
             //regex to remove NaN from incoming JSON which would otherwise crash the json parse.
             let cleanJSON = JSON.parse(string.replace(/\bNaN\b/g, "null"));
-            console.log(cleanJSON)
             this.setState({data: cleanJSON},
             this.filterData)
         })
     }
     
     applyFilters = (childData) => {
-        console.log('Filters Applied')
         this.setState({selectedFilters: childData},
             this.filterData
         );
@@ -123,21 +121,18 @@ class Datagrid extends React.Component{
 
 
     filterData = () => {
-        console.log('Getting this far')
         //Filter the data
 
         //Create an array of only the applied filters
         let filters = {}
         for(let filter in this.state.selectedFilters){
-            if(this.state.selectedFilters[filter] != 'Any'){
+            if(this.state.selectedFilters[filter] !== 'Any'){
                 filters[filter] = this.state.selectedFilters[filter]
             }
         }
-        console.log(filters)
 
         //Shorten list of data to applied filters
         let data = this.state.data
-        console.log(data)
 
         let filteredData = []
         //Loop through full set of data
@@ -146,7 +141,7 @@ class Datagrid extends React.Component{
             //loop through each key
             for (const key in filters) {
                 //if any of the filters don't pass, make sure data isn't added and break this iteration of the loop
-                if(data[i][key] != filters[key]){
+                if(data[i][key] !== filters[key]){
                     canBeAdded = false;
                     break;
                 }
@@ -206,6 +201,8 @@ class Datagrid extends React.Component{
                 case "Negative":
                     tempPieChartData["Negative"] = tempPieChartData["Negative"] + 1;
                     tempStackedBarChartData[this.state.filteredData[i]["Region"]][2] = tempStackedBarChartData[this.state.filteredData[i]["Region"]][2] + 1;
+                    break;
+                default:
                     break;
 
             }

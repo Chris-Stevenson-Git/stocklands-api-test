@@ -60,7 +60,7 @@ class Sidebar extends React.Component{
                             <option name='Any'>Any</option>
                             {
                                 businessUnits.map(item => (
-                                    <option name={item}>{item}</option>
+                                    <option key={item} name={item}>{item}</option>
                                 ))
                             }
                         </Form.Control>
@@ -71,7 +71,7 @@ class Sidebar extends React.Component{
                             <option name='Any'>Any</option>
                             {
                                 postType.map(item => (
-                                    <option name={item}>{item}</option>
+                                    <option key={item} name={item}>{item}</option>
                                 ))
                             }
                         </Form.Control>
@@ -82,7 +82,7 @@ class Sidebar extends React.Component{
                             <option name='Any'>Any</option>
                             {
                                 region.map(item => (
-                                    <option name={item}>{item}</option>
+                                    <option key={item} name={item}>{item}</option>
                                 ))
                             }
                         </Form.Control>
@@ -93,7 +93,7 @@ class Sidebar extends React.Component{
                             <option name='Any'>Any</option>
                             {
                                 sentiment.map(item => (
-                                    <option name={item}>{item}</option>
+                                    <option key={item} name={item}>{item}</option>
                                 ))
                             }
                         </Form.Control>
@@ -104,7 +104,7 @@ class Sidebar extends React.Component{
                             <option name='Any'>Any</option>
                             {
                                 subType.map(item => (
-                                    <option name={item}>{item}</option>
+                                    <option key={item} name={item}>{item}</option>
                                 ))
                             }
                         </Form.Control>
@@ -115,7 +115,7 @@ class Sidebar extends React.Component{
                             <option name='Any'>Any</option>
                             {
                                 topic.map(item => (
-                                    <option name={item}>{item}</option>
+                                    <option key={item} name={item}>{item}</option>
                                 ))
                             }
                         </Form.Control>
@@ -126,7 +126,7 @@ class Sidebar extends React.Component{
                             <option name='Any'>Any</option>
                             {
                                 indicator.map(item => (
-                                    <option name={item}>{item}</option>
+                                    <option key={item} name={item}>{item}</option>
                                 ))
                             }
                         </Form.Control>

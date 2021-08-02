@@ -206,7 +206,7 @@ class Datagrid extends React.Component{
                         <div className='graph-title'>POST VOLUME BY SENTIMENT</div>
                         <ResponsiveContainer width="100%" height="100%">
                             <PieChart width={400} height={400}>
-                                <Pie data={this.state.pieChartData} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={60} outerRadius={80} label>
+                                <Pie data={this.state.pieChartData} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={60} outerRadius={100} label>
                                     <Cell dataKey="Positive" fill='#839C9A'/>
                                     <Cell dataKey="Neutral" fill='#B3B3B3'/>
                                     <Cell dataKey="Negative" fill='#B98A5E'/>

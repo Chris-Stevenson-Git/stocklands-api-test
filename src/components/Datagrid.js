@@ -1,7 +1,7 @@
 import React from 'react'
 import { Container} from 'react-bootstrap';
 import { Pie, PieChart, Cell, ResponsiveContainer} from 'recharts';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, LabelList } from 'recharts';
 
 import Sidebar from './Sidebar.js'
 
@@ -198,6 +198,10 @@ class Datagrid extends React.Component{
 
     render(){
 
+        let renderLabel = function(entry) {
+            return `${entry.name} ${entry.value}`;
+        }
+
         return(
             <Container className='datagrid'>
                 <Sidebar sendData={this.applyFilters}/>
@@ -206,7 +210,7 @@ class Datagrid extends React.Component{
                         <div className='graph-title'>POST VOLUME BY SENTIMENT</div>
                         <ResponsiveContainer width="100%" height="100%">
                             <PieChart width={400} height={400}>
-                                <Pie data={this.state.pieChartData} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={60} outerRadius={100} label>
+                                <Pie data={this.state.pieChartData} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={60} outerRadius={100} label={renderLabel}>
                                     <Cell dataKey="Positive" fill='#839C9A'/>
                                     <Cell dataKey="Neutral" fill='#B3B3B3'/>
                                     <Cell dataKey="Negative" fill='#B98A5E'/>
@@ -220,12 +224,15 @@ class Datagrid extends React.Component{
                                 <BarChart 
                                     data={this.state.topicBarChartData}
                                     layout="vertical" barCategoryGap={2}
-                                    margin={{ top: 10, right: 35, left: 0, bottom: 10 }}>
+                                    margin={{ top: 10, right: 35, left: 0, bottom: 10 }}
+                                    >
                                 <Tooltip />
                                 <XAxis type="number" hide/>
                                 <YAxis type="category" dataKey="name" hide/>
                                     
-                                <Bar dataKey="value" stackId="a" fill="#839C9A" label={{position: 'right'}} />
+                                <Bar dataKey="value" stackId="a" fill="#839C9A" label={{position: 'right'}} >
+                                    <LabelList dataKey="name" position="insideLeft"/>
+                                </Bar>
                                 
                             </BarChart>
                             </ResponsiveContainer>

@@ -230,11 +230,16 @@ class Datagrid extends React.Component{
         sortedTopics.sort((a, b) => b[1] - a[1])
         let topicBarChartData = [];
         if(sortedTopics.length > 0){
-            for (let i = 0; i < 5; i++) { 
+            console.log("SORTED TOPICS")
+            console.log(sortedTopics)
+            for (let i = 0; i < sortedTopics.length; i++) { 
                 topicBarChartData.push({
                     name: sortedTopics[i][0],
                     value: sortedTopics[i][1]
                 })
+                if(i >= 4){
+                    break;
+                }
                 console.log('looping')
             }
         }
@@ -276,33 +281,36 @@ class Datagrid extends React.Component{
                 <Sidebar sendData={this.applyFilters}/>
                 <div className="graph-container">
                     <div className='graphs graph1'>
+                        <div className='graph-title'>POST VOLUME BY SENTIMENT</div>
                         <ResponsiveContainer width="100%" height="100%">
                             <PieChart width={400} height={400}>
                                 <Pie data={this.state.pieChartData} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={60} outerRadius={80} label>
-                                    <Cell dataKey="Positive" fill='#00810e'/>
-                                    <Cell dataKey="Neutral" fill='#ffff00'/>
-                                    <Cell dataKey="Negative" fill='#ff0000'/>
+                                    <Cell dataKey="Positive" fill='#839C9A'/>
+                                    <Cell dataKey="Neutral" fill='#B3B3B3'/>
+                                    <Cell dataKey="Negative" fill='#B98A5E'/>
                                 </Pie>
                             </PieChart>
                         </ResponsiveContainer>
                     </div>
                     <div className='graphs graph2'>
+                        <div className='graph-title'>TOP 5 TOPICS AMONG POSITIVE SENTIMENT</div>
                         <ResponsiveContainer>
                                 <BarChart 
                                     data={this.state.topicBarChartData}
                                     layout="vertical" barCategoryGap={2}
-                                    margin={{ top: 50, right: 0, left: 0, bottom: 0 }}>
+                                    margin={{ top: 10, right: 35, left: 0, bottom: 10 }}>
                                 <Tooltip />
                                 <XAxis type="number" hide/>
                                 <YAxis type="category" dataKey="name" hide/>
                                     
-                                <Bar dataKey="value" stackId="a" fill="#66d9ff" />
+                                <Bar dataKey="value" stackId="a" fill="#839C9A" label={{position: 'right'}} />
                                 
                             </BarChart>
                             </ResponsiveContainer>
                     </div>
                     <div className='graphs graph3'>
-                    <ResponsiveContainer width="100%" height="100%">
+                        <div className='graph-title'>REGION BY SENTIMENT</div>
+                        <ResponsiveContainer width="100%" height="100%">
                             <BarChart
                             width={500}
                             height={300}
@@ -319,9 +327,9 @@ class Datagrid extends React.Component{
                             <YAxis />
                             <Tooltip />
                             <Legend />
-                            <Bar dataKey="Negative" stackId="a" fill="#ff0000" />
-                            <Bar dataKey="Neutral" stackId="a" fill="#ffff00" />
-                            <Bar dataKey="Positive" stackId="a" fill="#00810e" />
+                            <Bar dataKey="Negative" stackId="a" fill="#B98A5E" />
+                            <Bar dataKey="Neutral" stackId="a" fill="#B3B3B3" />
+                            <Bar dataKey="Positive" stackId="a" fill="#839C9A" />
                             </BarChart>
                         </ResponsiveContainer>
                     </div>

@@ -47,14 +47,12 @@
     position: fixed;
     left: 0;
     margin-left: 20vw;
-    margin-top: 10vh;
-    height: 85vh;
+    margin-top: 5vh;
+    height: 90vh;
     width: 75vw;
-    border: 2px solid red;
 }
 
 .graphs {
-    border: 1px solid blue;
     background-color: #FCFBFB;
     width: 45%; 
     height: 45%;
@@ -75,4 +73,11 @@
     left: 3.3%;
     bottom: 3.3%;
     width: 93%;
+}
+
+.graph-title {
+    padding-left: 10px;
+    height: 30px;
+    color: white;
+    background-color: #00004D;
 }

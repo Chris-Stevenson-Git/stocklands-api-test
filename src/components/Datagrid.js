@@ -22,108 +22,34 @@ class Datagrid extends React.Component{
             "Sub Type": 'Any',
             "Topic": 'Any',
             'indicator': 'Any'
-        },
-
-        filteredData: {
-        },
-
-
-        pieChartData: [
-            {
-                name: "Positive",
-                value: 0
-            },
-            {
-                name: "Neutral",
-                value: 0
-            },
-            {
-                name: "Negative",
-                value: 0
-            }
-        ],
-
-        stackedBarChartData: [
-            {
-                name: 'NSWS',
-                Positive: 0,
-                Neutral: 0,
-                Negative: 0 
-            },
-            {
-                name: 'QLD',
-                Positive: 0,
-                Neutral: 0,
-                Negative: 0 
-            },
-            {
-                name: 'NSW',
-                Positive: 0,
-                Neutral: 0,
-                Negative: 0 
-            },
-            {
-                name: 'NSWN',
-                Positive: 0,
-                Neutral: 0,
-                Negative: 0 
-            },
-            {
-                name: 'WA',
-                Positive: 0,
-                Neutral: 0,
-                Negative: 0 
-            },
-            {
-                name: 'NAT',
-                Positive: 0,
-                Neutral: 0,
-                Negative: 0 
-            },
-            {
-                name: 'VIC',
-                Positive: 0,
-                Neutral: 0,
-                Negative: 0 
-            },
-            {
-                name: 'Other',
-                Positive: 0,
-                Neutral: 0,
-                Negative: 0 
-            }
-
-        ],
-
-        topicBarChartData: []
-
+        }
 
     }
 
     componentDidMount(){
+        //regex to remove NaN from incoming JSON which would otherwise crash the json parse.
         fetch('https://sob7yipykh.execute-api.ap-southeast-2.amazonaws.com/data-insights-sample-data')
         .then(response => {
           return response.text();
         })
         .then(string => {
-            //regex to remove NaN from incoming JSON which would otherwise crash the json parse.
             let cleanJSON = JSON.parse(string.replace(/\bNaN\b/g, "null"));
             this.setState({data: cleanJSON},
             this.filterData)
         })
     }
     
+    //function passed to Sidebar so it can update the filters here. 
     applyFilters = (childData) => {
         this.setState({selectedFilters: childData},
             this.filterData
         );
     }
 
-
+    //Function to filter out any data objects which do not match the applied filters
     filterData = () => {
-        //Filter the data
 
-        //Create an array of only the applied filters
+        //Create an object of only the applied filters to be checked against
         let filters = {}
         for(let filter in this.state.selectedFilters){
             if(this.state.selectedFilters[filter] !== 'Any'){
@@ -131,16 +57,14 @@ class Datagrid extends React.Component{
             }
         }
 
-        //Shorten list of data to applied filters
-        let data = this.state.data
 
+        
+        let data = this.state.data
         let filteredData = []
-        //Loop through full set of data
+        //Loop through full set of data and check each object against filters. If any do not pass, break out of loop early and move on. 
         for (let i = 0; i < data.length; i++) {
             let canBeAdded = true
-            //loop through each key
             for (const key in filters) {
-                //if any of the filters don't pass, make sure data isn't added and break this iteration of the loop
                 if(data[i][key] !== filters[key]){
                     canBeAdded = false;
                     break;
@@ -152,6 +76,7 @@ class Datagrid extends React.Component{
             
         }
 
+        //create a new set of data in state which has been filtered to match the sidebar
         this.setState({filteredData: filteredData},
             this.updateCharts)
     }
